@@ -1,33 +1,49 @@
 <template>
   <div class="logic-flow-container">
-    <NodePanel :idType="id" :lf="lf" :clearState="clearState" @changeFlag='changeFlag' ref="nodePanelRef">
+    <NodePanel
+      :idType="id"
+      :lf="lf"
+      :clearState="clearState"
+      @changeFlag="changeFlag"
+      ref="nodePanelRef"
+    >
     </NodePanel>
     <div class="logic-flow-main">
       <div class="control">
         <div class="control-flex">
           <div class="control-btns">
-            <div v-for="item, index in tabList" :key="index" class="control-item" @click="doClick(item.type)"
-              :style="{ borderRight: index != tabList.length - 1 ? '1px solid #999999' : '' }">
+            <div
+              v-for="(item, index) in tabList"
+              :key="index"
+              class="control-item"
+              @click="doClick(item.type)"
+              :style="{ borderRight: index != tabList.length - 1 ? '1px solid #999999' : '' }"
+            >
               <el-tooltip effect="dark" :content="item.label" placement="top">
-                <img v-if="index == 0 && undoDisable" :src="item.disIcon" class="btn1" alt="">
-                <img v-else-if="index == 0" :src="item.icon" class="btn1" alt="">
-                <img v-if="index == 1 && redoDisable" :src="item.disIcon" class="btn2" alt="">
-                <img v-else-if="index == 1" :src="item.icon" class="btn2" alt="">
-                <img v-if="index == 2" :src="item.icon" class="btn3" alt="">
-                <img v-if="index == 4" :src="item.icon" class="btn3" alt="">
-                <img v-if="index == 5" :src="item.icon" class="btn3" alt="">
-                <img v-if="index == 3 || index == 6" :src="item.icon" class="btn4" alt="">
+                <img v-if="index == 0 && undoDisable" :src="item.disIcon" class="btn1" alt="" />
+                <img v-else-if="index == 0" :src="item.icon" class="btn1" alt="" />
+                <img v-if="index == 1 && redoDisable" :src="item.disIcon" class="btn2" alt="" />
+                <img v-else-if="index == 1" :src="item.icon" class="btn2" alt="" />
+                <img v-if="index == 2" :src="item.icon" class="btn3" alt="" />
+                <img v-if="index == 4" :src="item.icon" class="btn3" alt="" />
+                <img v-if="index == 5" :src="item.icon" class="btn3" alt="" />
+                <img v-if="index == 3 || index == 6" :src="item.icon" class="btn4" alt="" />
               </el-tooltip>
             </div>
           </div>
-          <el-button type="primary" @click="open" style="height: 38px;">提交</el-button>
+          <el-button type="primary" @click="open" style="height: 38px">提交</el-button>
         </div>
       </div>
       <div class="logic-flow">
-        <div style="height: 100%;" ref="logicFlowRef"></div>
-        <Setting class="logic-flow-setting" :data="nodeData!" :lf="lf" :type="state.settingType" :flag="flag"></Setting>
+        <div style="height: 100%" ref="logicFlowRef"></div>
+        <Setting
+          class="logic-flow-setting"
+          :data="nodeData!"
+          :lf="lf"
+          :type="state.settingType"
+          :flag="flag"
+        ></Setting>
       </div>
-
     </div>
     <el-drawer v-model="show" title="数据提交" width="500">
       <el-form label-width="150px" :model="form" ref="ruleFormRef" label-position="top">
@@ -37,7 +53,7 @@
       </el-form>
       <template #footer>
         <el-button @click="show = false">取消</el-button>
-        <el-button type="primary" @click="submit(ruleFormRef)">确定</el-button>
+        <el-button type="primary" @click="submit()">确定</el-button>
       </template>
     </el-drawer>
   </div>
@@ -59,9 +75,8 @@ import { lywMessage, lywConfirm } from '@/utils/feedBack'
 
 import { controlData } from './util/controlData'
 
-
-const lf = shallowRef<LogicFlow>()  // lf实例
-const nodePanelRef = ref()  // 侧边栏实例
+const lf = shallowRef<LogicFlow>() // lf实例
+const nodePanelRef = ref() // 侧边栏实例
 
 // 清空数据
 const clear = () => {
@@ -80,11 +95,7 @@ const { tabList, undoDisable, redoDisable, doClick } = controlData(lf, clear)
 // 控制动态组件显示与隐藏
 const flag = ref(false)
 
-
-
-
 const id = ref<any>(null)
-
 
 const changeFlag = (val: any) => {
   flag.value = val
@@ -102,7 +113,8 @@ const form = ref<any>({
 const show = ref(false)
 
 const open = () => {
-  if ((lf.value?.getGraphData() as any).nodes.length == 0) return lywMessage('渲染面板无数据，请拖拽数据后再提交', 'error')
+  if ((lf.value?.getGraphData() as any).nodes.length == 0)
+    return lywMessage('渲染面板无数据，请拖拽数据后再提交', 'error')
   show.value = true
 }
 const clearState = () => {
@@ -161,13 +173,12 @@ const getSettingInfo = (data: LogicFlow.NodeData | LogicFlow.EdgeData) => {
 const predecessorNodeId = ref<any>(null)
 const successorNodeId = ref<any>(null)
 
-
 //注册事件
 const initEvent = (lf: any) => {
   lf.value?.on('blank:click', (e: any) => {
     state.settingType = 'all'
   })
-  lf.value?.on('node:mousedown', ({ data }) => {
+  lf.value?.on('node:mousedown', ({ data }: { data: any }) => {
     const { id, x, y, type } = data
     const connectedEdges = lf.value?.getNodeEdges(id)
     // console.log(connectedEdges, 'connectedEdges')
@@ -184,7 +195,7 @@ const initEvent = (lf: any) => {
     lf.value?.selectElementById(data.id, false)
     getSettingInfo(data)
   })
-  lf.value?.on('edge:click', ({ data }) => {
+  lf.value?.on('edge:click', ({ data }: { data: any }) => {
     lf.value?.selectElementById(data.id, false)
     getSettingInfo(data)
   })
@@ -219,7 +230,7 @@ const initEvent = (lf: any) => {
   //   // lywMessage(data.msg, 'error')
   //   // return false
   // })
-  lf.value?.on('node:dnd-add', ({ data }) => {
+  lf.value?.on('node:dnd-add', ({ data }: { data: any }) => {
     // 选中节点 更改信息
     lf.value?.selectElementById(data.id, false)
     getSettingInfo(data)
@@ -236,14 +247,13 @@ const initEvent = (lf: any) => {
     }
   })
 
-  lf.value?.on('history:change', ({ data }) => {
+  lf.value?.on('history:change', ({ data }: { data: any }) => {
     undoDisable.value = !data.undoAble
     redoDisable.value = !data.redoAble
   })
 }
 
 const ruleFormRef = ref()
-
 
 const submit = () => {
   console.log(lf.value?.getGraphData())
@@ -299,7 +309,7 @@ onMounted(() => {
 
     .control {
       padding: 22px 24px;
-      background: #FFFFFF;
+      background: #ffffff;
       box-shadow: 0px 0px 5px 0px rgba(1, 36, 88, 0.09);
       border-radius: 6px;
       border-bottom: 1px solid #e9e9e9;
@@ -311,9 +321,9 @@ onMounted(() => {
         display: flex;
 
         .control-btns {
-          background: #FFFFFF;
+          background: #ffffff;
           border-radius: 6px;
-          border: 1px solid #DCDFE6;
+          border: 1px solid #dcdfe6;
           padding: 8px 3px;
           display: flex;
           margin-right: 10px;
@@ -346,7 +356,6 @@ onMounted(() => {
       }
     }
 
-
     .logic-flow {
       position: relative;
       flex: 1;
@@ -365,8 +374,6 @@ onMounted(() => {
         background-color: #fff;
       }
     }
-
-
   }
 }
 </style>

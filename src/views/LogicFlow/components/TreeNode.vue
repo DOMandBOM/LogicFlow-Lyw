@@ -28,9 +28,10 @@
           </transition>
         </span>
       </div>
-
       <!-- 子级容器 -->
-      <transition name="expand" @enter="onEnter" @after-enter="onAfterEnter" @leave="onLeave">
+      <transition name="expand" @enter="(el: Element, done: () => void) => onEnter(el as HTMLElement)"
+        @after-enter="(el: Element) => onAfterEnter(el as HTMLElement)"
+        @leave="(el: Element, done: () => void) => onLeave(el as HTMLElement)">
         <div v-if="isExpanded && hasChildren" class="children-container">
           <TreeNode ref="a" v-for="child in node.children" :key="child.id" :node="child" :level="level + 1"
             @mousedown="change(child)" />

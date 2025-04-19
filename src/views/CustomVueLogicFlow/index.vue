@@ -32,15 +32,18 @@ onMounted(() => {
       zoom: {
         min: 0.2,
         max: 2,
-        size: 0.1
-      }
+        size: 0.1,
+      },
     })
 
-    register({
-      type: 'custom-vue-node',
-      component: ProgressNode,
-      model: CustomNodeModel,
-    }, lf.value)
+    register(
+      {
+        type: 'custom-vue-node',
+        component: ProgressNode,
+        model: CustomNodeModel,
+      },
+      lf.value,
+    )
 
     lf.value?.register({
       type: 'CustomNodeLine',
@@ -57,7 +60,7 @@ onMounted(() => {
 
     lf.value.render({
       nodes: [],
-      edges: []
+      edges: [],
     })
 
     tableData.value.nodes.forEach((item: any, index: any) => {
@@ -71,11 +74,11 @@ onMounted(() => {
             list: item.list,
             modeName: item.modeName,
             tableName: item.tableName,
-            id: item.id
+            id: item.id,
           },
           width: 480,
           height: 280,
-        }
+        },
       })
     })
     tableData.value.edges.forEach((item: any) => {
@@ -85,7 +88,7 @@ onMounted(() => {
         targetNodeId: item.targetNodeId,
         sourceAnchorId: item.sourceAnchorId,
         targetAnchorId: item.targetAnchorId,
-        type: 'CustomNodeLine'
+        type: 'CustomNodeLine',
       })
     })
 
@@ -100,18 +103,20 @@ const sendStatus = (flag: boolean) => {
 
 // 编辑与移除事件
 const initEvent = (lf: any) => {
-  lf.value.on('graph:rendered', ({ graphModel }) => {
+  lf.value.on('graph:rendered', ({ graphModel }: { graphModel: any }) => {
     flowId.value = graphModel.flowId!
   })
-  lf.value?.graphModel.eventCenter.on("node:doEdit", (agrs: any) => {
+  lf.value?.graphModel.eventCenter.on('node:doEdit', (agrs: any) => {
     const { form, pojoList } = agrs
-    console.log({ form, pojoList }, '编辑');
+    console.log({ form, pojoList }, '编辑')
     sendStatus(true)
   })
 
-  lf.value?.graphModel.eventCenter.on("node:doDel", (agrs: any) => {
-    const { data: { modeName, tableName } } = agrs
-    console.log({ modeName, tableName }, '移除');
+  lf.value?.graphModel.eventCenter.on('node:doDel', (agrs: any) => {
+    const {
+      data: { modeName, tableName },
+    } = agrs
+    console.log({ modeName, tableName }, '移除')
     sendStatus(true)
   })
 }
