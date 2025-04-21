@@ -2,13 +2,14 @@
   <div class="app-container">
     <header class="header">
       <div class="logo-container">
-        <!-- <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="40" height="40" /> -->
-        <h1 class="title">LogicFlow案例</h1>
+        <h1 class="title gradient-text">LogicFlow案例</h1>
       </div>
       <nav class="nav-menu">
-        <RouterLink to="/" class="nav-item">首页</RouterLink>
-        <RouterLink to="/logic-flow" class="nav-item">LogicFlow</RouterLink>
-        <RouterLink to="/custom-vue-logic-flow" class="nav-item">CustomVueLogicFlow</RouterLink>
+        <RouterLink to="/" class="nav-item gradient-text-title">首页</RouterLink>
+        <RouterLink to="/logic-flow" class="nav-item gradient-text-title">LogicFlow</RouterLink>
+        <RouterLink to="/custom-vue-logic-flow" class="nav-item gradient-text-title"
+          >CustomVueLogicFlow</RouterLink
+        >
       </nav>
     </header>
 
@@ -51,6 +52,33 @@ import { RouterLink, RouterView } from 'vue-router'
 </style>
 
 <style scoped>
+/* 核心渐变样式（4浏览器兼容方案） */
+.gradient-text {
+  /* 标准语法（未来-proof） */
+  background: linear-gradient(135deg, #2b6cb0, #4fd1c5);
+
+  /* WebKit内核（Chrome/Safari） */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  /* Firefox（需浏览器支持，新版本默认开启） */
+  background-clip: text;
+  color: transparent;
+}
+
+/* 核心渐变样式（4浏览器兼容方案） */
+.gradient-text-title {
+  /* 标准语法（未来-proof） */
+  background: linear-gradient(135deg, #ed64a6, #f6ad55);
+  /* WebKit内核（Chrome/Safari） */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  /* Firefox（需浏览器支持，新版本默认开启） */
+  background-clip: text;
+  color: transparent;
+}
+
 .app-container {
   /* min-height: 100vh; */
   display: flex;
