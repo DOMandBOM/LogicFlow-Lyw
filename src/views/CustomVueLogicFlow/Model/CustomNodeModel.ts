@@ -1,4 +1,4 @@
-import { RectNodeModel } from '@logicflow/core'
+import { RectNodeModel, CircleNodeModel } from '@logicflow/core'
 class CustomNodeModel extends RectNodeModel {
   //移入放大锚点
   getAnchorStyle(anchorInfo: any) {
@@ -21,7 +21,7 @@ class CustomNodeModel extends RectNodeModel {
       strokeDasharray: '0', // 取消虚线效果
       strokeWidth: 0, // 完全隐藏边框
     }
-  } 
+  }
 
   getNodeStyle() {
     const style = super.getNodeStyle()

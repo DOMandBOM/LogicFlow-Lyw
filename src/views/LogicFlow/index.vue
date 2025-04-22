@@ -1,24 +1,13 @@
 <template>
   <div class="logic-flow-container">
-    <NodePanel
-      :idType="id"
-      :lf="lf"
-      :clearState="clearState"
-      @changeFlag="changeFlag"
-      ref="nodePanelRef"
-    >
+    <NodePanel :idType="id" :lf="lf" :clearState="clearState" @changeFlag="changeFlag" ref="nodePanelRef">
     </NodePanel>
     <div class="logic-flow-main">
       <div class="control">
         <div class="control-flex">
           <div class="control-btns">
-            <div
-              v-for="(item, index) in tabList"
-              :key="index"
-              class="control-item"
-              @click="doClick(item.type)"
-              :style="{ borderRight: index != tabList.length - 1 ? '1px solid #999999' : '' }"
-            >
+            <div v-for="(item, index) in tabList" :key="index" class="control-item" @click="doClick(item.type)"
+              :style="{ borderRight: index != tabList.length - 1 ? '1px solid #999999' : '' }">
               <el-tooltip effect="dark" :content="item.label" placement="top">
                 <img v-if="index == 0 && undoDisable" :src="item.disIcon" class="btn1" alt="" />
                 <img v-else-if="index == 0" :src="item.icon" class="btn1" alt="" />
@@ -36,13 +25,7 @@
       </div>
       <div class="logic-flow">
         <div style="height: 100%" ref="logicFlowRef"></div>
-        <Setting
-          class="logic-flow-setting"
-          :data="nodeData!"
-          :lf="lf"
-          :type="state.settingType"
-          :flag="flag"
-        ></Setting>
+        <Setting class="logic-flow-setting" :data="nodeData!" :lf="lf" :type="state.settingType" :flag="flag"></Setting>
       </div>
     </div>
     <el-drawer v-model="show" title="数据提交" width="500">
@@ -53,7 +36,7 @@
       </el-form>
       <template #footer>
         <el-button @click="show = false">取消</el-button>
-        <el-button type="primary" @click="submit()">确定</el-button>
+        <el-button type="primary" @click="submit">确定</el-button>
       </template>
     </el-drawer>
   </div>

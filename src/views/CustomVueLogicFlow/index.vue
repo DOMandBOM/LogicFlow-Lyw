@@ -1,5 +1,5 @@
 <template>
-  <div ref="containerRef" id="graph" class="viewport"></div>
+  <div ref="containerRef" class="viewport"></div>
   <TeleportContainer :flow-id="flowId" />
 </template>
 
@@ -16,11 +16,11 @@ import { commonData } from './utils/commonData'
 const { tableData } = commonData()
 // ref
 const containerRef = ref<HTMLDivElement | null>(null)
-// 类似于Vue3的Teleport
+
 const TeleportContainer = getTeleport()
 
 const flowId = ref('')
-const lf = ref<any>()
+const lf = ref<LogicFlow>()
 
 onMounted(() => {
   if (containerRef.value) {
@@ -35,7 +35,6 @@ onMounted(() => {
         size: 0.1,
       },
     })
-
     register(
       {
         type: 'custom-vue-node',
@@ -51,11 +50,11 @@ onMounted(() => {
       model: CustomNodeLine,
     })
 
+
     lf.value?.graphModel.transformModel.zoom(0.5)
 
-    lf.value.graphModel.edgeType = 'CustomNodeLine'
+    lf.value.graphModel.setDefaultEdgeType('CustomNodeLine')
 
-    // 注册节点
     initEvent(lf)
 
     lf.value.render({

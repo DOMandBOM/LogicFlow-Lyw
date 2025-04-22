@@ -1,9 +1,7 @@
 <template>
   <div class="box">
     <div>
-      <div class="gradient-text" style="margin-bottom: 20px; font-size: 20px">
-        注意： 以下网址均需科学上网
-      </div>
+      <div class="gradient-text attention">注意： 以下网址均需科学上网</div>
       <div v-for="(item, index) in arr">
         <div class="box-item">
           <span class="gradient-text">{{ item.title }}：</span>
@@ -18,9 +16,9 @@ import { ref } from 'vue'
 const arr = ref([
   { title: '个人博客', url: 'https://domandbom.github.io/star/' },
   { title: 'LogicFlow博客', url: 'https://domandbom.github.io/star/2025/04213575961113.html' },
-  { title: 'LogicFlow的Vue3自定义节点博客', url: '暂无' },
+  { title: 'LogicFlow的Vue3自定义节点博客', url: 'https://domandbom.github.io/star/2025/0422368113.html' },
   { title: 'LogicFlow官网', url: 'https://site.logic-flow.cn/' },
-  // { title: 'LogicFlow代码', url: 'https://github.com/DOMandBOM/LogicFlow-Lyw' },
+  { title: 'LogicFlow代码', url: 'https://github.com/DOMandBOM/LogicFlow-Lyw' },
 ])
 </script>
 <style scoped>
@@ -30,11 +28,18 @@ const arr = ref([
   align-items: center;
   height: calc(100vh - 80px);
 }
+
 .box-item {
   margin-bottom: 10px;
   justify-content: center;
   align-items: center;
 }
+
+.attention {
+  margin-bottom: 20px;
+  font-size: 20px;
+}
+
 a {
   color: #ff6347;
   font-size: 18px;
